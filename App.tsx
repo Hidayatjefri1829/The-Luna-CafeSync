@@ -1,9 +1,8 @@
-
-import React, { useState, useEffect, useMemo } from 'react';
-import { MenuItem, CartItem, Order, ViewMode, OrderStatus, PaymentStatus } from './types';
-import { INITIAL_MENU } from './constants';
-import CustomerPortal from './components/CustomerPortal';
-import StaffPortal from './components/StaffPortal';
+import React, { useState, useEffect } from 'react';
+import { MenuItem, CartItem, Order, ViewMode, OrderStatus, PaymentStatus } from './types.ts';
+import { INITIAL_MENU } from './constants.tsx';
+import CustomerPortal from './components/CustomerPortal.tsx';
+import StaffPortal from './components/StaffPortal.tsx';
 
 const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('customer');
@@ -12,7 +11,6 @@ const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [activeOrder, setActiveOrder] = useState<Order | null>(null);
 
-  // Persistence (Simulated)
   useEffect(() => {
     const savedOrders = localStorage.getItem('luna_orders');
     if (savedOrders) setOrders(JSON.parse(savedOrders));
@@ -29,7 +27,6 @@ const App: React.FC = () => {
     localStorage.setItem('luna_menu', JSON.stringify(menu));
   }, [menu]);
 
-  // Order Handlers
   const handlePlaceOrder = (newOrder: Order) => {
     setOrders(prev => [newOrder, ...prev]);
     setActiveOrder(newOrder);
@@ -53,24 +50,24 @@ const App: React.FC = () => {
   const handleClearOrders = () => {
     if (window.confirm("Are you sure you want to clear all order history?")) {
       setOrders([]);
+      localStorage.removeItem('luna_orders');
     }
   };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Top View Switcher (For Demo Purposes) */}
-      <div className="bg-indigo-900 text-white p-2 text-xs flex justify-center gap-4 sticky top-0 z-50 shadow-md">
+      <div className="bg-indigo-950 text-white p-2 text-[10px] font-black uppercase tracking-widest flex justify-center gap-6 sticky top-0 z-50 backdrop-blur-md bg-opacity-90 border-b border-indigo-900">
         <button 
           onClick={() => setViewMode('customer')}
-          className={`px-3 py-1 rounded-full transition-colors ${viewMode === 'customer' ? 'bg-indigo-500 font-bold' : 'hover:bg-indigo-800'}`}
+          className={`px-4 py-1.5 rounded-full transition-all ${viewMode === 'customer' ? 'bg-indigo-600 shadow-lg scale-105' : 'opacity-50 hover:opacity-100'}`}
         >
           Customer View
         </button>
         <button 
           onClick={() => setViewMode('staff')}
-          className={`px-3 py-1 rounded-full transition-colors ${viewMode === 'staff' ? 'bg-indigo-500 font-bold' : 'hover:bg-indigo-800'}`}
+          className={`px-4 py-1.5 rounded-full transition-all ${viewMode === 'staff' ? 'bg-indigo-600 shadow-lg scale-105' : 'opacity-50 hover:opacity-100'}`}
         >
-          Staff Dashboard
+          Staff Portal
         </button>
       </div>
 
