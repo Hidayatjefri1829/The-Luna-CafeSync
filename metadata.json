@@ -1,0 +1,7 @@
+{
+  "name": "The Luna Shop - Malaysian Cuisine",
+  "description": "A comprehensive food ordering system for The Luna Shop, featuring customer ordering, real-time merchant dashboards, and digital receipts for authentic Malaysian food.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
