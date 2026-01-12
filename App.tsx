@@ -1,9 +1,9 @@
 
-import React, { useState, useEffect } from 'react';
-import { MenuItem, CartItem, Order, ViewMode, OrderStatus, PaymentStatus } from './types.ts';
-import { INITIAL_MENU } from './constants.tsx';
-import CustomerPortal from './components/CustomerPortal.tsx';
-import StaffPortal from './components/StaffPortal.tsx';
+import React, { useState, useEffect, useMemo } from 'react';
+import { MenuItem, CartItem, Order, ViewMode, OrderStatus, PaymentStatus } from './types';
+import { INITIAL_MENU } from './constants';
+import CustomerPortal from './components/CustomerPortal';
+import StaffPortal from './components/StaffPortal';
 
 const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('customer');
@@ -15,22 +15,10 @@ const App: React.FC = () => {
   // Persistence (Simulated)
   useEffect(() => {
     const savedOrders = localStorage.getItem('luna_orders');
-    if (savedOrders) {
-      try {
-        setOrders(JSON.parse(savedOrders));
-      } catch (e) {
-        console.error("Error loading orders from storage", e);
-      }
-    }
+    if (savedOrders) setOrders(JSON.parse(savedOrders));
     
     const savedMenu = localStorage.getItem('luna_menu');
-    if (savedMenu) {
-      try {
-        setMenu(JSON.parse(savedMenu));
-      } catch (e) {
-        console.error("Error loading menu from storage", e);
-      }
-    }
+    if (savedMenu) setMenu(JSON.parse(savedMenu));
   }, []);
 
   useEffect(() => {
